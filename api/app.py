@@ -16,6 +16,7 @@ def prime_number_check(number):
 def hello_world():
     return render_template("index.html") 
 
+#this is the function for submitting the number
 @app.route("/submit", methods=["POST"])
 def submit():
     input_number = request.form.get("number")
