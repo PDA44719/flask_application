@@ -2,7 +2,7 @@
 	<body>
 		<h1>Hello<h1>
 		<p>Chosen Number: {{ number }}</p>
-		<p>The number is {{"PRIME" if is_prime else "NOT PRIME"}}</p>
+		<p>The chosen number is {{"PRIME" if is_prime else "NOT PRIME"}}</p>
 		<img src="{{url_for('static', filename=image_src)}}" alt="result emoji">
 	</body>
 </html>
