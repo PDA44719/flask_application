@@ -15,6 +15,8 @@ def valid_number(number):
         return True
 
 def prime_number_check(number):
+    if number == 1: # 1 is not considered a prime number
+        return False
     counter = 2
     while counter <= math.sqrt(number):
         if number % counter == 0:
