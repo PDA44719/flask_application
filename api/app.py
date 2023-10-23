@@ -49,12 +49,15 @@ def error():
     return render_template("error.html")
 
 
+def process_query(query):
+    if query == 'dinosaurs':
+        return "Dinosaurs ruled the Earth 200 million years ago"
+    if query == 'asteroids':
+        return "Unknown"
+    return "Invalid query"
+
+
 @app.route("/query")
 def query():
-    dinosaurs = request.ars.get('dinosaurs')
-    if dinosaurs:
-        return "Dinosaurs ruled the Earth 200 million years ago"
-    
-    asteroids = request.args.get('asteroids')
-    if asteroids:
-        return "Unkown"
+    query = request.ars.get('q')
+    return process_query(query)
