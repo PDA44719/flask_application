@@ -59,5 +59,5 @@ def process_query(query):
 
 @app.route("/query")
 def query():
-    query = request.ars.get('q')
+    query = request.args.get('q')
     return process_query(query)
