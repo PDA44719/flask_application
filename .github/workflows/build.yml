@@ -27,7 +27,7 @@ jobs:
       - name: Install pytest
         run: pip install pytest
       - name: Install requirements
-        run: pip install requirements.txt
+        run: pip install -r requirements.txt
       - name: Run pytest
         run: pytest api/*.py
   deploy-to-vercel:
