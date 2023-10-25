@@ -8,7 +8,8 @@ def valid_number(number):
     # Only int values greater than 0 are allowed
     try:
         number_int = int(number)  # Convert from str to int
-    except TypeError:
+        print(number_int)
+    except (TypeError, ValueError):
         return False
     if number_int <= 0:
         return False
