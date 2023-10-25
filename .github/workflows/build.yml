@@ -14,7 +14,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run flake8
         run: flake8 api/
-  import-formatting: 
+  import-formatting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,11 +26,11 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Run isort
-        run: isort api/    
+        run: isort api/
   code-quality-check:
     needs: 
-    - job: python-formatting
-    - job: import-formatting
+      - import-formatting
+      - python-formatting
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
