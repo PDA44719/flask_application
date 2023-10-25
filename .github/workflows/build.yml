@@ -10,12 +10,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Install flake8
-        run: pip install flake8
+      - name: Install requirements
+        run: pip install -r requirements.txt
       - name: Run flake8
         run: flake8 api/
-  unit-testing:
-    needs: python-formatting
+  import-formatting: 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,10 +23,34 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Install pytest
-        run: pip install pytest
       - name: Install requirements
         run: pip install -r requirements.txt
+      - name: Run isort
+        run: isort api/    
+  code-quality-check:
+    needs: 
+    - job: python-formatting
+    - job: import-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Run ruff
+        run: ruff check .
+  unit-testing:
+    needs: code-quality-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
       - name: Run pytest
         run: pytest api/*.py
   deploy-to-vercel:
