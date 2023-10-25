@@ -43,7 +43,7 @@ jobs:
         run: pip install ruff
       - name: Run ruff
         run: ruff check .
-  unit-testing:
+  testing-prime-check:
     needs: code-quality-check
     runs-on: ubuntu-latest
     steps:
@@ -56,9 +56,40 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
       - name: Run pytest
-        run: pytest api/*.py
+        run: pytest api/test_prime_number_check.py
+  testing-valid-input:
+    needs: code-quality-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Run pytest
+        run: pytest api/test_valid_input.py
+  testing-queries:
+    needs: code-quality-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Run pytest
+        run: pytest api/test_queries.py
   deploy-to-vercel:
-    needs: unit-testing
+    needs:
+      - testing-prime-check
+      - testing-valid-input
+      - testing-queries
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
