@@ -55,6 +55,8 @@ def process_query(query):
         return "Dinosaurs ruled the Earth 200 million years ago"
     if query == 'asteroids':
         return "Unknown"
+    if "name" in query:
+        return "Pablo&Gabriel"
     return "Invalid query"
 
 
