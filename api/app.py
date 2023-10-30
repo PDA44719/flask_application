@@ -50,6 +50,13 @@ def error():
     return render_template("error.html")
 
 
+def addition(query):
+    query_split = query.split()
+    num1 = int(query_split[2])
+    num2 = int(''.join([char for char in query_split[4] if char != "?"]))
+    return str(num1 + num2)
+
+
 def process_query(query):
     if query == 'dinosaurs':
         return "Dinosaurs ruled the Earth 200 million years ago"
@@ -57,6 +64,8 @@ def process_query(query):
         return "Unknown"
     if "name" in query:
         return "Pablo&Gabriel"
+    if "plus" in query:
+        return addition(query)
     return "Invalid query"
 
 
