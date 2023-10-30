@@ -27,3 +27,8 @@ def test_square_cube():
     query_part1 = "Which of the following numbers is both a square and "
     query = query_part1 + "a cube: 3, 3, 2, 1, 1, 1, 64?"
     assert process_query(query) == "64"
+
+
+def test_multiply():
+    query = "What is 12 multiplied by 2?"
+    assert process_query(query) == "24"
