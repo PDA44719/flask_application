@@ -56,6 +56,13 @@ def addition(query):
     num2 = int(''.join([char for char in query_split[4] if char != "?"]))
     return str(num1 + num2)
 
+def highest_of_three_values(query):
+    query_split = query.split()
+    num1 = int(query_split[-1][:-1])
+    num2 = int(query_split[-2][:-1])
+    num3 = int(query_split[-3][:-1])
+    return str(max(num1, num2, num3))
+
 
 def process_query(query):
     if query == 'dinosaurs':
@@ -66,6 +73,8 @@ def process_query(query):
         return "Pablo&Gabriel"
     if "plus" in query:
         return addition(query)
+    if "the largest:" in query:
+        return highest_of_three_values(query)
     return "Invalid query"
 
 
