@@ -56,6 +56,7 @@ def addition(query):
     num2 = int(''.join([char for char in query_split[4] if char != "?"]))
     return str(num1 + num2)
 
+
 def highest_of_three_values(query):
     query_split = query.split()
     num1 = int(query_split[-1][:-1])
