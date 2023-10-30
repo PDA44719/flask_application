@@ -21,3 +21,9 @@ def test_addition():
 def test_largest():
     query = "Which of the following numbers is the largest: 23, 47, 11?"
     assert process_query(query) == "47"
+
+
+def test_square_cube():
+    query_part1 = "Which of the following numbers is both a square and "
+    query = query_part1 + "a cube: 3, 3, 2, 1, 1, 1, 64?"
+    assert process_query(query) == "64"
