@@ -19,4 +19,5 @@ def test_addition():
 
 
 def test_largest():
-    assert process_query("Which of the following numbers is the largest: 23, 47, 11?") == "47"
+    query = "Which of the following numbers is the largest: 23, 47, 11?"
+    assert process_query(query) == "47"
