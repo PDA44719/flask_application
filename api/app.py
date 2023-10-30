@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import math
+import numpy as np
 
 app = Flask(__name__)
 
@@ -65,6 +66,22 @@ def highest_of_three_values(query):
     return str(max(num1, num2, num3))
 
 
+def square_and_cube(query):
+    query_split = query.split()
+    num1 = int(query_split[-1][:-1])
+    num2 = int(query_split[-2][:-1])
+    num3 = int(query_split[-3][:-1])
+    num4 = int(query_split[-4][:-1])
+    num5 = int(query_split[-5][:-1])
+    num6 = int(query_split[-6][:-1])
+    num7 = int(query_split[-7][:-1])
+    num_list = [num1, num2, num3, num4, num5, num6, num7]
+    for num in num_list:
+        if math.sqrt(num) % 1 == 0 and np.cbrt(num) % 1 == 0:
+            return str(num)
+    return ""  # No number found
+
+
 def process_query(query):
     if query == 'dinosaurs':
         return "Dinosaurs ruled the Earth 200 million years ago"
@@ -76,6 +93,8 @@ def process_query(query):
         return addition(query)
     if "the largest:" in query:
         return highest_of_three_values(query)
+    if "square" in query and "cube" in query:
+        return square_and_cube(query)
     return "Invalid query"
 
 
