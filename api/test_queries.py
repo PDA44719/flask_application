@@ -16,3 +16,7 @@ def test_name():
 
 def test_addition():
     assert process_query("What is 53 plus 27?") == "80"
+
+
+def test_largest():
+    assert process_query("Which of the following numbers is the largest: 23, 47, 11?") == "47"
