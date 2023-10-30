@@ -82,6 +82,13 @@ def square_and_cube(query):
     return ""  # No number found
 
 
+def multiply(query):
+    query_split = query.split()
+    num1 = int(query_split[2])
+    num2 = int(query_split[5][:-1])
+    return str(num1 * num2)
+
+
 def process_query(query):
     if query == 'dinosaurs':
         return "Dinosaurs ruled the Earth 200 million years ago"
@@ -95,6 +102,8 @@ def process_query(query):
         return highest_of_three_values(query)
     if "square" in query and "cube" in query:
         return square_and_cube(query)
+    if "multiplied by" in query:
+        return multiply(query)
     return "Invalid query"
 
 
