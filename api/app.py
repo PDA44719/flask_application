@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import math
 import numpy as np
+import requests
 
 app = Flask(__name__)
 
@@ -114,3 +115,13 @@ def process_query(query):
 def query():
     query = request.args.get('q')
     return process_query(query)
+
+@app.route("/github", methods=["POST"])
+def github():
+    username = request.form.get("username")
+    response = requests.get(f'https://api.github.com/users/{username}/repos')
+    if response.status_code == 200:
+        repos = response.json() # data returned is a list of ‘repository’ entities
+    for repo in repos:
+        print(repo["full_name"])
+    return render_template("github.html", username=username)
