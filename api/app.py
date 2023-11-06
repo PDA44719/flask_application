@@ -122,6 +122,4 @@ def github():
     response = requests.get(f'https://api.github.com/users/{username}/repos')
     if response.status_code == 200:
         repos = response.json() # data returned is a list of ‘repository’ entities
-    for repo in repos:
-        print(repo["full_name"])
-    return render_template("github.html", username=username)
+    return render_template("github.html", username=username, repos=repos)
