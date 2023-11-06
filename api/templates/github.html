@@ -1,8 +1,23 @@
 <html>
 	<body>
         <h1>{{username}}, you have the following repositories:</h1>
-        {% for repo in repos %}
-            <p>{{repo}}</p>
-        {% endfor%}
+            <table>
+                <tr>
+                    <th>Repository</th>
+                    <th>Latest Commit Hash</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Message</th>
+                </tr>
+                {% for i in range(len(repos)) %}
+                    <tr>
+                        <th>repos[i]</th>
+                        <th>commit_results[i]['hash']</th>
+                        <th>commit_results[i]['author']</th>
+                        <th>commit_results[i]['date']</th>
+                        <th>commit_results[i]['message']</th>
+                    </tr>
+                {% endfor%}
+            </table>
 	</body>
 </html>
