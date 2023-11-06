@@ -116,10 +116,15 @@ def query():
     query = request.args.get('q')
     return process_query(query)
 
+
 @app.route("/github", methods=["POST"])
 def github():
     username = request.form.get("username")
     response = requests.get(f'https://api.github.com/users/{username}/repos')
     if response.status_code == 200:
-        repos = response.json() # data returned is a list of ‘repository’ entities
-    return render_template("github.html", username=username, repos=repos)
+        # data returned is a list of ‘repository’ entities
+        repos = response.json()
+    repo_names = []
+    for repo in repos:
+        repo_names.append(repo["full_name"])
+    return render_template("github.html", username=username, repos=repo_names)
