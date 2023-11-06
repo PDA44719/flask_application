@@ -1,5 +1,8 @@
 <html>
 	<body>
-        <p>Hello {{username}}/p>
+        <h1>{{username}}, you have the following repositories:</h1>
+        {% for repo in repos %}
+            <p>{{repo}}</p>
+        {% endfor%}
 	</body>
 </html>
