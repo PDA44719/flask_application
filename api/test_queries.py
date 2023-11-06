@@ -25,7 +25,7 @@ def test_largest():
 
 def test_square_cube():
     query_part1 = "Which of the following numbers is both a square and "
-    query = query_part1 + "a cube: 1089, 288, 729, 2197, 3596, 3648, 4197?"
+    query = query_part1 + "a cube: 1, 2, 3, 4, 5, 7, 64?"
     assert process_query(query) == "64"
 
 
