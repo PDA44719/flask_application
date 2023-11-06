@@ -9,13 +9,13 @@
                     <th>Date</th>
                     <th>Message</th>
                 </tr>
-                {% for i in range(len(repos)) %}
+                {% for i in range(repos|length) %}
                     <tr>
-                        <th>repos[i]</th>
-                        <th>commit_results[i]['hash']</th>
-                        <th>commit_results[i]['author']</th>
-                        <th>commit_results[i]['date']</th>
-                        <th>commit_results[i]['message']</th>
+                        <td>{{repos[i]}}</td>
+                        <td>{{commit_results[i]['hash']}}</td>
+                        <td>{{commit_results[i]['author']}}</td>
+                        <td>{{commit_results[i]['date']}}</td>
+                        <td>{{commit_results[i]['message']}}</td>
                     </tr>
                 {% endfor%}
             </table>

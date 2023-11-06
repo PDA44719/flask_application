@@ -122,7 +122,8 @@ def github():
     username = request.form.get("username")
     print(username)
     # Get repos response
-    repos_response = requests.get(f'https://api.github.com/users/{username}/repos')
+    url = f'https://api.github.com/users/{username}/repos'
+    repos_response = requests.get(url)
     print(repos_response)
     if repos_response.status_code == 200:
         # data returned is a list of ‘repository’ entities
@@ -134,18 +135,18 @@ def github():
     # Get the commits of each repo
     list_of_commits = []
     for name in repo_names:
-        commits_response = requests.get(f'https://api.github.com/repos/{name}/commits')
+        url = f'https://api.github.com/repos/{name}/commits'
+        commits_response = requests.get(url)
         commits = commits_response.json()
         list_of_commits.append(commits[0])
     list_of_results = []
     for commit in list_of_commits:
         d = {
             'hash': commit['sha'][:7],
-            'author' : commit['commit']['author']['email'],
-            'date' :commit['commit']['author']['date'][:10],
-            'message' : commit['commit']['message']
-        } 
+            'author': commit['commit']['author']['email'],
+            'date': commit['commit']['author']['date'][:10],
+            'message': commit['commit']['message']
+        }
         list_of_results.append(d)
-        print(d)
-        print('\n') 
-    return render_template("github.html", username=username, repos=repo_names, commit_results = list_of_results)
+    return render_template("github.html", username=username, repos=repo_names,
+                           commit_results=list_of_results)
