@@ -77,6 +77,9 @@ def square_and_cube(query):
     num7 = int(query_split[-7][:-1])
     num_list = [num1, num2, num3, num4, num5, num6, num7]
     for num in num_list:
+        if num == 729:
+            print(math.sqrt(num) % 1)
+            print(round(np.cbrt(num) % 1, 100))
         if math.sqrt(num) % 1 == 0 and np.cbrt(num) % 1 == 0:
             return str(num)
     return ""  # No number found
