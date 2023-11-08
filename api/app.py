@@ -141,20 +141,34 @@ def github():
             repo_names.append(repo["full_name"])
 
     # Get the commits of each repo
-    list_of_commits = []
+    list_of_last_commits = []
     for name in repo_names:
         url = f'https://api.github.com/repos/{name}/commits'
         commits_response = requests.get(url)
         commits = commits_response.json()
-        list_of_commits.append(commits[0])
+        try:
+            list_of_last_commits.append(commits[0])
+
+        except:
+            list_of_last_commits.append("no commits")
+            print("Repository with no commits found. It will be ignored")
     list_of_results = []
-    for commit in list_of_commits:
-        d = {
-            'hash': commit['sha'][:7],
-            'author': commit['commit']['author']['email'],
-            'date': commit['commit']['author']['date'][:10],
-            'message': commit['commit']['message']
-        }
+    for commit in list_of_last_commits:
+        if commit == "no commits":
+            d = {
+                'hash': 'NONE', 
+                'author': 'NONE', 
+                'date': 'NONE',
+                'message': 'NO COMMITS HAVE BEEN MADE'
+            }
+        else:
+            d = {
+                'hash': commit['sha'][:7],
+                'author': commit['commit']['author']['email'],
+                'date': commit['commit']['author']['date'][:10],
+                'message': commit['commit']['message']
+            }
         list_of_results.append(d)
+        print(list_of_results)
     return render_template("github.html", username=username, repos=repo_names,
                            commit_results=list_of_results)
