@@ -35,9 +35,13 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/prime_check")
+def prime_check():
+    return render_template("prime_page.html")
+
 # this is the function for submitting the number
-@app.route("/submit", methods=["POST"])
-def submit():
+@app.route("/prime_checked", methods=["POST"])
+def prime_checked():
     input_number = request.form.get("number")
     if not valid_number(input_number):
         return redirect("/error")
@@ -116,6 +120,10 @@ def query():
     query = request.args.get('q')
     return process_query(query)
 
+
+@app.route("/github_check")
+def github_check():
+    return render_template("github_check_page.html")
 
 @app.route("/github", methods=["POST"])
 def github():

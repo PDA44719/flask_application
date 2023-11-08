@@ -1,4 +1,8 @@
+{% from "navbar.html" import create_navbar with context %}
 <html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+	</head>
 	<body>
 		<h1>Results:<h1>
 		<p>Chosen Number: {{ number }}</p>

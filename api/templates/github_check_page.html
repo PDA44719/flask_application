@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+	</head>
+	<body>
+		<h2> Please, input a Github username to check their repositories and last commits</h2>
+		<form action="/github" method="post">
+			<label for="textfield">User Name:</label>
+			<input type="text" id="textfield" name="username">
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+</html>

@@ -1,0 +1,14 @@
+{% from "navbar.html" import create_navbar with context %}
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+	</head>
+	<body>
+		<h2>Please, submit a number to check if it is prime</h2>
+		<form action="prime_checked" method="post">
+			<label for="numberfield">Number:</label>
+			<input type="text" id="numberfield" name="number">
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+</html>
