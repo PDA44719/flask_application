@@ -39,6 +39,7 @@ def index():
 def prime_check():
     return render_template("prime_page.html")
 
+
 # this is the function for submitting the number
 @app.route("/prime_checked", methods=["POST"])
 def prime_checked():
@@ -125,6 +126,7 @@ def query():
 def github_check():
     return render_template("github_check_page.html")
 
+
 @app.route("/github", methods=["POST"])
 def github():
     username = request.form.get("username")
@@ -149,15 +151,15 @@ def github():
         try:
             list_of_last_commits.append(commits[0])
 
-        except:
+        except KeyError:
             list_of_last_commits.append("no commits")
             print("Repository with no commits found. It will be ignored")
     list_of_results = []
     for commit in list_of_last_commits:
         if commit == "no commits":
             d = {
-                'hash': 'NONE', 
-                'author': 'NONE', 
+                'hash': 'NONE',
+                'author': 'NONE',
                 'date': 'NONE',
                 'message': 'NO COMMITS HAVE BEEN MADE'
             }
@@ -172,3 +174,37 @@ def github():
         print(list_of_results)
     return render_template("github.html", username=username, repos=repo_names,
                            commit_results=list_of_results)
+
+
+@app.route("/nasa")
+def nasa():
+    return render_template("nasa.html", explanation="", url="")
+
+
+@app.route("/nasa", methods=["POST"])
+def nasa_form_and_picture():
+    year = request.form.get("year")
+    month = request.form.get("month")
+    day = request.form.get("day")
+
+    if len(month) < 2:
+        month = '0' + month
+    if len(day) < 2:
+        day = '0' + day
+
+    date = f'{year}-{month}-{day}'
+
+    # Get API to respond
+    default_params = '&api_key=60vSeyurGsbd9hhIGpvOo1QS9istjh8vmKsHaqSo'
+    query_url = f'https://api.nasa.gov/planetary/apod?date={date}'
+    query_url = query_url + default_params
+
+    pic_of_the_day = requests.get(query_url)
+    if pic_of_the_day.status_code == 200:
+        pic_of_the_day = pic_of_the_day.json()
+        explanation = pic_of_the_day['explanation']
+        url = pic_of_the_day['url']
+    else:
+        explanation = ''
+        url = ''
+    return render_template("nasa.html", explanation=explanation, url=url)
