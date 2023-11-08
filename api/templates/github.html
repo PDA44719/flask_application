@@ -1,8 +1,10 @@
+{% from "navbar.html" import create_navbar with context %}
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 	</head>
 	<body>
+		{{create_navbar("github")}}
         <h1>{{username}}, you have the following repositories:</h1>
             <table class="table table-striped table-bordered table-dark">
                 <tr>
