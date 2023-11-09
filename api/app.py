@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect
 import math
 import numpy as np
 import requests
-from pydantic import BaseModel
-import os
 
 
 app = Flask(__name__)
@@ -212,7 +210,7 @@ def nasa_form_and_picture():
     base_url = "https://api.nasa.gov/planetary/apod?"
     query_parameters = {
         "date": date,
-        "api_key": "60vSeyurGsbd9hhIGpvOo1QS9istjh8vmKsHaqSo"
+        "api_key": NASA_API
     }
 
     # obtain the picture of the day, at the specified date
@@ -225,4 +223,3 @@ def nasa_form_and_picture():
         explanation = ''
         url = ''
     return render_template("nasa.html", explanation=explanation, url=url)
-
