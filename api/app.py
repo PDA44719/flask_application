@@ -210,7 +210,7 @@ def nasa_form_and_picture():
     base_url = "https://api.nasa.gov/planetary/apod?"
     query_parameters = {
         "date": date,
-        "api_key": NASA_API
+        "api_key": '60vSeyurGsbd9hhIGpvOo1QS9istjh8vmKsHaqSo'
     }
 
     # obtain the picture of the day, at the specified date
