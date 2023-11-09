@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect
 import math
 import numpy as np
 import requests
+from pydantic import BaseModel
+import os
+
 
 app = Flask(__name__)
 
@@ -130,30 +133,32 @@ def github_check():
 @app.route("/github", methods=["POST"])
 def github():
     username = request.form.get("username")
-    print(username)
-    # Get repos response
+
+    # Get all the public repo names
     url = f'https://api.github.com/users/{username}/repos'
     repos_response = requests.get(url)
-    print(repos_response)
-    if repos_response.status_code == 200:
-        # data returned is a list of ‘repository’ entities
-        repos = repos_response.json()
-        repo_names = []
-        for repo in repos:
-            repo_names.append(repo["full_name"])
 
-    # Get the commits of each repo
+    if repos_response.status_code != 200:
+        return redirect("/github_error")
+    repos = repos_response.json()
+    if len(repos) == 0:
+        return redirect("/github_no_user")
+
+    repo_names = [repo["full_name"] for repo in repos]
+
+    # Get the last commit of each repo
     list_of_last_commits = []
     for name in repo_names:
         url = f'https://api.github.com/repos/{name}/commits'
         commits_response = requests.get(url)
         commits = commits_response.json()
         try:
-            list_of_last_commits.append(commits[0])
+            list_of_last_commits.append(commits[0])  # append last commit
 
-        except KeyError:
+        except KeyError:  # no commits have been made in this repo
             list_of_last_commits.append("no commits")
-            print("Repository with no commits found. It will be ignored")
+
+    # Get all the required information for the table
     list_of_results = []
     for commit in list_of_last_commits:
         if commit == "no commits":
@@ -171,9 +176,18 @@ def github():
                 'message': commit['commit']['message']
             }
         list_of_results.append(d)
-        print(list_of_results)
     return render_template("github.html", username=username, repos=repo_names,
                            commit_results=list_of_results)
+
+
+@app.route("/github_error")
+def github_error():
+    return render_template("github_error.html")
+
+
+@app.route("/github_no_user")
+def github_no_user():
+    return render_template("github_no_user.html")
 
 
 @app.route("/nasa")
@@ -194,12 +208,15 @@ def nasa_form_and_picture():
 
     date = f'{year}-{month}-{day}'
 
-    # Get API to respond
-    default_params = '&api_key=60vSeyurGsbd9hhIGpvOo1QS9istjh8vmKsHaqSo'
-    query_url = f'https://api.nasa.gov/planetary/apod?date={date}'
-    query_url = query_url + default_params
+    # define the base url and the parameters
+    base_url = "https://api.nasa.gov/planetary/apod?"
+    query_parameters = {
+        "date": date,
+        "api_key": "60vSeyurGsbd9hhIGpvOo1QS9istjh8vmKsHaqSo"
+    }
 
-    pic_of_the_day = requests.get(query_url)
+    # obtain the picture of the day, at the specified date
+    pic_of_the_day = requests.get(base_url, params=query_parameters)
     if pic_of_the_day.status_code == 200:
         pic_of_the_day = pic_of_the_day.json()
         explanation = pic_of_the_day['explanation']
@@ -208,3 +225,4 @@ def nasa_form_and_picture():
         explanation = ''
         url = ''
     return render_template("nasa.html", explanation=explanation, url=url)
+
